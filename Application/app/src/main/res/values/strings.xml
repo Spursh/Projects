@@ -1,6 +1,26 @@
 <resources>
-    <string name="app_name">Application</string>
+    <string name="app_name">Smart Basket</string>
     <string name="action_settings">Settings</string>
     <string name="scan">Scan</string>
 
+
+
+    <string name="string_enter_name">Enter your name</string>
+    <string name="string_choose_username">Choose your username</string>
+    <string name="string_choose_password">Choose your password</string>
+    <string name="string_enter_email">Enter your email</string>
+    <string name="button_register">Register</string>
+    <string name="ShowCart">View Scanned Products</string>
+    <string name="submit">Submit</string>
+    <string name="cardDetails">Card Details</string>
+    <string name="cardNumber">Card #</string>
+    <string name="expirationDate">Expiration</string>
+    <string name="expirationMonth">MM</string>
+    <string name="expirationYear">YY</string>
+    <string name="cvv">CVV2, CVC2, or CID</string>
+    <string name="cardHolder">Card Holder</string>
+    <string name="cardHolderName">Card Holder Name</string>
+    <string name="amount">Amount</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 </resources>

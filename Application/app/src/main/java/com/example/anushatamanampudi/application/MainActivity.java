@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +24,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener{
     ArrayList<String> itemList =new ArrayList<String>();
-    private Button scanBtn;
-    private TextView formatTxt, contentTxt,PriceTxt;
+    private Button scanBtn,showcartBtn;
+    private TextView formatTxt, contentTxt,PriceTxt,SumTxt;
     private ListView itemsLV;
     private ArrayAdapter<String> lvArrayAdapter;
+    ArrayList<Integer> priceList=new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +47,27 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
             }
         });
         scanBtn = (Button)findViewById(R.id.scan_button);
+        showcartBtn=(Button)findViewById(R.id.Cart_button);
         formatTxt = (TextView)findViewById(R.id.scan_format);
         contentTxt = (TextView)findViewById(R.id.scan_content);
         PriceTxt = (TextView)findViewById(R.id.price_content);
+        SumTxt = (TextView)findViewById(R.id.SumTxt);
         scanBtn.setOnClickListener(this);
-        itemsLV = (ListView)findViewById(R.id.listView);
-        ListView itemsLV = (ListView)findViewById(R.id.listView);
-        lvArrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,itemList);
-        itemsLV.setAdapter(lvArrayAdapter);
+        //itemsLV = (ListView)findViewById(R.id.listView);
+       // ListView itemsLV = (ListView)findViewById(R.id.listView);
+       lvArrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item,itemList);
+      //  itemsLV.setAdapter(lvArrayAdapter);
 
     }
 
     // assign the list adapter
+
+
+    public void showcart(View view) {
+        Intent intent = new Intent(this, CatalogActivity.class);
+        startActivity(intent);
+    }
+
 
 
 
@@ -91,26 +102,36 @@ public class MainActivity extends AppCompatActivity implements OnClickListener{
 //scan
         }
 
+
+
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 //retrieve scan result
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        //Log.v(String.valueOf(scanningResult),"reslut");
         if (scanningResult != null) {
 
+            if(scanningResult.getContents()!=null && scanningResult.getFormatName()!=null) {
+                String scanContent = scanningResult.getContents();
+               // String scanFormat = scanningResult.getFormatName();
 
+               // formatTxt.setText("FORMAT: " + scanFormat);
+                contentTxt.setText("CONTENT: " + scanContent);
+                new PriceActivity(this, PriceTxt, SumTxt, itemList,priceList,lvArrayAdapter).execute(scanContent);
 
-            String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
-            formatTxt.setText("FORMAT: " + scanFormat);
-            contentTxt.setText("CONTENT: " + scanContent);
-            new PriceActivity(this, PriceTxt,itemList,lvArrayAdapter).execute(scanContent);
-
-
+            }
+            else{
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "No scan data received!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
             //String id = contentTxt.getText().toString();
 
         }
         else{
+            Log.v("usyguyu","bjndjnvfjd");
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();

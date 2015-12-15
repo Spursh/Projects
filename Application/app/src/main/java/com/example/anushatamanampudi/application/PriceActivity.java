@@ -25,16 +25,20 @@ public class PriceActivity extends AsyncTask<String,Void,String>  {
     public static String line;
     public TextView PriceTxt;
     public Context context;
+    public TextView SumTxt;
 
     private ArrayAdapter<String> lvArrayAdapter;
     ArrayList<String> itemList;
+    ArrayList<Integer> priceList;
 
-    public PriceActivity(Context context, TextView PriceTxt,ArrayList<String> itemList,ArrayAdapter<String> lvArrayAdapter) {
+    public PriceActivity(Context context, TextView PriceTxt,TextView SumTxt,ArrayList<String> itemList,ArrayList<Integer> priceList,ArrayAdapter<String> lvArrayAdapter) {
         this.context = context;
         this.PriceTxt = PriceTxt;
         this.lvArrayAdapter=lvArrayAdapter;
         this.itemList=itemList;
-        Toast.makeText(context, "hello", Toast.LENGTH_LONG).show();
+        this.priceList=priceList;
+        this.SumTxt=SumTxt;
+
     }
 
     public void onPreExecute() {
@@ -83,18 +87,37 @@ public class PriceActivity extends AsyncTask<String,Void,String>  {
     @Override
     public void  onPostExecute(String result) {
 
-        Toast.makeText(context, "hello", Toast.LENGTH_LONG).show();
+
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         // Log.d("ttttttt", result);
-        this.PriceTxt.setText("Price: "+result);
+        this.PriceTxt.setText(result);
         //line = result;
         if(PriceTxt.getText().toString().isEmpty()){
 
-        }else{
-            itemList.add(PriceTxt.getText().toString());
-            lvArrayAdapter.notifyDataSetChanged();
-        }
+        }else {
+            //Log.d("ttttttt", String.valueOf(result.indexOf(":") + 1-result.indexOf(".")));
+            //Log.v("gusdgjht", String.valueOf(result.indexOf(".")));
 
+            if (((result.indexOf("."))-(result.indexOf(":")+1)) > 0) {
+                int intresult = Integer.parseInt(result.substring(result.lastIndexOf(":") + 1, result.lastIndexOf(".")));
+
+
+                priceList.add(intresult);
+                int sum = 0;
+                for (int i = 0; i < priceList.size(); i++) {
+                    sum += priceList.get(i);
+                }
+                //this.SumTxt.setText("Total Price: " + String.valueOf(sum));
+                Toast.makeText(context, String.valueOf(sum), Toast.LENGTH_LONG).show();
+                itemList.add(PriceTxt.getText().toString());
+               // new ShoppingCartHelper(result.substring(result.indexOf(":") + 1, result.indexOf(".")),"",intresult);
+                ShoppingCartHelper.addcatalog(result.substring(result.indexOf(":") + 1, result.indexOf(".")),"",intresult);
+
+                //lvArrayAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(context, "Sorry product scanned is not for sale!", Toast.LENGTH_LONG).show();
+            }
+        }
 
 
 

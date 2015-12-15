@@ -13,47 +13,45 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView" />
-    <TextView
         android:id="@+id/price_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:textIsSelectable="true"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_below="@+id/textView"
         android:layout_alignParentStart="true" />
     <Button android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scan"
-        android:layout_below="@+id/scan_format"
-        android:layout_toStartOf="@+id/scan_content" />
+        android:layout_below="@+id/SumTxt"
+        android:layout_centerHorizontal="true" />
+
     <TextView
-        android:id="@+id/scan_format"
+        android:id="@+id/SumTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:textIsSelectable="true"
-        android:layout_below="@+id/price_content"
-        android:layout_toEndOf="@+id/price_content" />
+        android:layout_below="@+id/scan_content" />
 
     <TextView
         android:id="@+id/scan_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
         android:textIsSelectable="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/scan_content" />
-
-    <ListView
+        android:layout_below="@+id/price_content" />
+    <TextView
+        android:id="@+id/scan_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_below="@+id/scan_button"
+        android:textIsSelectable="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_toEndOf="@+id/scan_button"
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/scan_content"
+        android:layout_above="@+id/SumTxt"
+        android:layout_alignStart="@+id/Cart_button" />
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -63,6 +61,14 @@
         android:layout_toEndOf="@+id/scan_format" />
 
 
+
+    <Button android:id="@+id/Cart_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ShowCart"
+        android:onClick="showcart"
+        android:layout_above="@+id/scrollView"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
